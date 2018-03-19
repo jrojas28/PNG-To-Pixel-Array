@@ -1,0 +1,37 @@
+{
+  "name": "png-to-pixel-arr",
+  "version": "1.0.0",
+  "description": "A png to JSON object service returning an array of the pixels and its colors",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "babel-node app.js"
+  },
+  "keywords": [
+    "png",
+    "array",
+    "pixel",
+    "art"
+  ],
+  "author": "Luis E. Rojas",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "config": "^1.30.0",
+    "express": "^4.16.3",
+    "pngjs": "^3.3.2",
+    "request": "^2.85.0",
+    "winston": "3.0.0-rc3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0"
+  }
+}
