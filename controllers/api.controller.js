@@ -24,9 +24,10 @@ import { fetchPngFromUrl } from "../util/pngjs";
         return;
     }
     try {
-        await fetchPngFromUrl(url);
+        const imageData = await fetchPngFromUrl(url);
         res.json({
             status: 'ok',
+            data: imageData,
         });
     } catch (err) {
         next(err);

@@ -1,7 +1,7 @@
 /**
  * @file PNGJS Utility methods
  */
-
+import rgbHex from 'rgb-hex';
 import request from 'request';
 import { PNG } from 'pngjs';
 import { throwError, ERRORS } from './errors';
@@ -13,6 +13,27 @@ const logger = Logger('PNGJS.Logger');
 const ACCEPTED_DATA_TYPES = [
     'image/png',
 ];
+
+const imageToObject = pngImage  => {
+    const pngData = [];
+    for(let y = 0; y < pngImage.height; y++) {
+        for(let x = 0; x < pngImage.width; x++) {
+            const pixelIndex = (pngImage.width * y + x) << 2;
+            const r = pngImage.data[pixelIndex];
+            const g = pngImage.data[pixelIndex + 1];
+            const b = pngImage.data[pixelIndex + 2];
+            // We could get alpha, but don't need it.
+            pngData.push({
+                r,
+                g,
+                b,
+                hex: rgbHex(r,g,b),
+            });
+        }
+    }
+
+    return pngData;
+}
  /**
   * @param {String} imageUrl the URL to fetch the png from.
   * @returns {Promise} a promise to read the stream and return a PngJS object.
@@ -35,6 +56,6 @@ export const fetchPngFromUrl = imageUrl => new Promise((resolve, reject) => {
                 width: this.width,
             });
 
-            resolve();
+            resolve(imageToObject(this));
         });
 });
