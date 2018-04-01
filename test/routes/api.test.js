@@ -119,7 +119,7 @@ describe('API Route Tests', () => {
           }
 
           done();
-        })
-    })
+        });
+    });
   });
 });
