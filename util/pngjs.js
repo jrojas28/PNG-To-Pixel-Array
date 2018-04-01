@@ -1,9 +1,11 @@
 /**
  * @file PNGJS Utility methods
  */
+import stream from 'stream';
 import rgbHex from 'rgb-hex';
 import request from 'request';
 import { PNG } from 'pngjs';
+import base64Stream from 'base64-stream';
 import { throwError, ERRORS } from './errors';
 
 import Logger from './logger';
@@ -47,9 +49,7 @@ export const fetchPngFromUrl = imageUrl => new Promise((resolve, reject) => {
                 reject(throwError(ERRORS.E002));
             }
         })
-        .pipe(new PNG({
-            filterType: 4
-        }))
+        .pipe(new PNG())
         .on('parsed', function() {
             logger.info('fetchPngFromUrl :: Parsed here.', {
                 height: this.height,
@@ -57,5 +57,32 @@ export const fetchPngFromUrl = imageUrl => new Promise((resolve, reject) => {
             });
 
             resolve(imageToObject(this));
+        })
+        .on('error', function(err) {
+            logger.error('fetchPngFromUrl :: error.', err);
+            reject(err);
+        })
+});
+
+export const pngFromBase64 = base64 => new Promise((resolve, reject) => {
+    const base64Input = new stream.Readable();
+    base64Input.push(base64.split(',').pop());
+    base64Input.push(null);
+
+    base64Input
+        .pipe(base64Stream.decode())
+        .pipe(new PNG())
+        .on('parsed', function() {
+            logger.info('pngFromBase64 :: Image Parsed', {
+                height: this.height,
+                width: this.width,
+            });
+
+            resolve(imageToObject(this));
+        })
+        .on('error', function(err) {
+            console.log(err);
+            logger.error('pngFromBase64 :: error: ', err);
+            reject(err);
         });
 });

@@ -16,6 +16,11 @@ export const ERRORS = {
         description: "Content type not accepted",
         status: 400,
     },
+    E003: {
+        errorCode: 1,
+        description: "An image in base64 is required",
+        status: 400,
+    },
 }
 
 /**
