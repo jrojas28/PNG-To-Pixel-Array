@@ -1,9 +1,10 @@
 import {
-    getImageFromUrl,
-    getImageFromBase64,
+  getImageFromUrl,
+  getImageFromBase64,
 } from '../controllers/api.controller';
 
 const express = require('express');
+
 const router = express.Router();
 
 router.post('/img-from-url', getImageFromUrl);
