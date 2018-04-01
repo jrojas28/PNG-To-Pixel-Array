@@ -43,7 +43,7 @@ export const throwError = (e) => {
  * @param {Express.Response} res The Response object from express.
  * @returns {Error}
  */
-export default (err, req, res) => {
+export default (err, req, res, next) => {
   const error = {
     errorCode: 0,
     description: 'An unexpected error happened.',
@@ -52,6 +52,6 @@ export default (err, req, res) => {
   };
 
   logger.error('There was an error in the application.', error);
-
   res.status(error.status).json(error);
+  next();
 };

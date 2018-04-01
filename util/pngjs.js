@@ -55,7 +55,8 @@ export const fetchPngFromUrl = imageUrl => new Promise((resolve, reject) => {
     .get(imageUrl)
     .on('error', reject)
     .on('data', (chunk) => {
-      if (!ACCEPTED_DATA_TYPES.includes(fileType(chunk).mime)) {
+      const mimeData = fileType(chunk);
+      if (mimeData && !ACCEPTED_DATA_TYPES.includes(mimeData.mime)) {
         reject(throwError(ERRORS.E002));
       }
     })
@@ -87,7 +88,8 @@ export const pngFromBase64 = base64 => new Promise((resolve, reject) => {
   base64Input
     .pipe(base64Stream.decode())
     .on('data', (chunk) => {
-      if (!ACCEPTED_DATA_TYPES.includes(fileType(chunk).mime)) {
+      const mimeData = fileType(chunk);
+      if (mimeData && !ACCEPTED_DATA_TYPES.includes(mimeData.mime)) {
         reject(throwError(ERRORS.E002));
       }
     })

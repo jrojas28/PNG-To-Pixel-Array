@@ -1,20 +1,32 @@
 /**
  * @file Logger creator utility
  */
-const { createLogger, format, transports } = require('winston');
+import config from 'config';
+import { createLogger, format, transports } from 'winston';
+
 
 const {
   combine,
   timestamp,
   label,
-  prettyPrint,
+  json,
+  printf,
 } = format;
 
-export default loggerName => createLogger({
-  format: combine(
+/**
+ * Allows to have an empty logger.
+ */
+const emptyFormat = printf(() => '');
+
+export default (loggerName) => {
+  const loggerFormat = config.get('logging') ? combine(
     label({ label: loggerName }),
-    timestamp(),
-    prettyPrint(),
-  ),
-  transports: [new transports.Console()],
-});
+    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    json(),
+  ) : emptyFormat;
+
+  return createLogger({
+    format: loggerFormat,
+    transports: [new transports.Console()],
+  });
+};

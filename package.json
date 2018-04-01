@@ -4,7 +4,7 @@
   "description": "A png to JSON object service returning an array of the pixels and its colors",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "NODE_ENV=test mocha test/**/*.test.js --compilers js:babel-core/register",
     "start": "nodemon app.js --exec babel-node"
   },
   "keywords": [
@@ -19,6 +19,7 @@
     "babel-polyfill": "^6.26.0",
     "base64-stream": "^0.1.3",
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
     "config": "^1.30.0",
     "express": "^4.16.3",
     "file-type": "^7.6.0",
@@ -39,6 +40,16 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "nodemon": "^1.17.3"
+    "mocha": "^5.0.5",
+    "nodemon": "^1.17.3",
+    "supertest": "^3.0.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   }
 }
