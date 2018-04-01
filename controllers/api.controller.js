@@ -1,13 +1,13 @@
 /**
  * @file Core PNG-To-Pixel-Array related routes.
  */
+import isBase64 from 'is-base64';
 import { fetchPngFromUrl, pngFromBase64 } from '../util/pngjs';
 import {
   ERRORS,
   throwError,
 } from '../util/errors';
 
-const isBase64 = require('is-base64');
 
 
 /**

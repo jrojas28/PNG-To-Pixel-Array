@@ -1,13 +1,12 @@
 import 'babel-polyfill';
 
+import express from 'express';
+import config from 'config';
+import bodyParser from 'body-parser';
+
 import Logger from './util/logger';
 import ErrorMiddleware from './util/errors';
 import ApiRouter from './routes/api.router';
-
-const express = require('express');
-const config = require('config');
-const bodyParser = require('body-parser');
-
 
 const app = express();
 

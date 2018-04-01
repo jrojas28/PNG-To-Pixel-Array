@@ -1,9 +1,8 @@
+import express from 'express';
 import {
   getImageFromUrl,
   getImageFromBase64,
 } from '../controllers/api.controller';
-
-const express = require('express');
 
 const router = express.Router();
 
