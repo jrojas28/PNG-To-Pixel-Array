@@ -1,5 +1,6 @@
 {
     "port": 3005,
     "parseTransparentPixels": true,
-    "logging": true
+    "logging": true,
+    "env": "dev"
 }

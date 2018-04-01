@@ -13,7 +13,7 @@ to make this production ready:
 - [X] Core PNG to Pixel Array Transformation
 - [ ] Allow to define a `transparent` color
 - [ ] Allow to config max image size.
-- [ ] Compile server using Webpack.
+- [X] Compile server using Webpack.
 
 ## Test:
 To test, just run `yarn test` and you should be good to go. Note that logging is disabled for tests, but if you may find them useful, feel free to enable them within `config/test.json`.

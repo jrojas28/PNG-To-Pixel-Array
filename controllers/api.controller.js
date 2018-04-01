@@ -8,8 +8,6 @@ import {
   throwError,
 } from '../util/errors';
 
-
-
 /**
   * Given an Image URl in the req.query.url
   * parses it and returns an array containing

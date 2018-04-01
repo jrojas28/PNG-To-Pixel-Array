@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'babel-register';
 
 import express from 'express';
 import config from 'config';
