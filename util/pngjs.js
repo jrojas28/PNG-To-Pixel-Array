@@ -4,6 +4,8 @@
 import stream from 'stream';
 import rgbHex from 'rgb-hex';
 import request from 'request';
+import fileType from 'file-type';
+import config from 'config';
 import { PNG } from 'pngjs';
 import base64Stream from 'base64-stream';
 import { throwError, ERRORS } from './errors';
@@ -13,6 +15,7 @@ const logger = Logger('PNGJS.Logger');
 
 
 const ACCEPTED_DATA_TYPES = [
+  // this is only a PNG Util, no more types should be added here.
   'image/png',
 ];
 
@@ -24,13 +27,18 @@ const imageToObject = (pngImage) => {
       const r = pngImage.data[pixelIndex];
       const g = pngImage.data[pixelIndex + 1];
       const b = pngImage.data[pixelIndex + 2];
-      // We could get alpha, but don't need it.
+      const a = pngImage.data[pixelIndex + 3];
+
+      const parseTransparentPixels = config.get('parseTransparentPixels');
+
       const hex = rgbHex(r, g, b);
       pngData.push({
         r,
         g,
         b,
+        a: (parseTransparentPixels && a) || undefined,
         hex,
+        isTransparent: a === 0,
       });
     }
   }
@@ -46,6 +54,11 @@ export const fetchPngFromUrl = imageUrl => new Promise((resolve, reject) => {
   request
     .get(imageUrl)
     .on('error', reject)
+    .on('data', (chunk) => {
+      if (!ACCEPTED_DATA_TYPES.includes(fileType(chunk).mime)) {
+        reject(throwError(ERRORS.E002));
+      }
+    })
     .on('response', (response) => {
       if (!ACCEPTED_DATA_TYPES.includes(response.headers['content-type'])) {
         reject(throwError(ERRORS.E002));
@@ -73,6 +86,11 @@ export const pngFromBase64 = base64 => new Promise((resolve, reject) => {
 
   base64Input
     .pipe(base64Stream.decode())
+    .on('data', (chunk) => {
+      if (!ACCEPTED_DATA_TYPES.includes(fileType(chunk).mime)) {
+        reject(throwError(ERRORS.E002));
+      }
+    })
     .pipe(new PNG())
     .on('parsed', function () {
       logger.info('pngFromBase64 :: Image Parsed', {
