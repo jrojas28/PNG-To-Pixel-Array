@@ -38,14 +38,18 @@ describe('API Route Tests', () => {
             done(err);
           }
 
-          const { body } = res;
-          for (let i = 0; i < body.length; i += 1) {
-            const pixel = body[i];
-            expect(pixel.r).to.equal(skybluePixelData.r);
-            expect(pixel.g).to.equal(skybluePixelData.g);
-            expect(pixel.b).to.equal(skybluePixelData.b);
-            expect(pixel.hex).to.equal(skybluePixelData.hex);
-            expect(pixel.isTransparent).to.equal(skybluePixelData.isTransparent);
+          const { body: { data } } = res;
+          for (let i = 0; i < data.length; i += 1) {
+            const row = data[i];
+
+            for (let j = 0; j < row.length; j += 1) {
+              const pixel = data[i][j];
+              expect(pixel.r).to.equal(skybluePixelData.r);
+              expect(pixel.g).to.equal(skybluePixelData.g);
+              expect(pixel.b).to.equal(skybluePixelData.b);
+              expect(pixel.hex).to.equal(skybluePixelData.hex);
+              expect(pixel.isTransparent).to.equal(skybluePixelData.isTransparent);
+            }
           }
 
           done();
@@ -108,14 +112,18 @@ describe('API Route Tests', () => {
             done(err);
           }
 
-          const { body } = res;
-          for (let i = 0; i < body.length; i += 1) {
-            const pixel = body[i];
-            expect(pixel.r).to.equal(skybluePixelData.r);
-            expect(pixel.g).to.equal(skybluePixelData.g);
-            expect(pixel.b).to.equal(skybluePixelData.b);
-            expect(pixel.hex).to.equal(skybluePixelData.hex);
-            expect(pixel.isTransparent).to.equal(skybluePixelData.isTransparent);
+          const { body: { data } } = res;
+          for (let i = 0; i < data.length; i += 1) {
+            const row = data[i];
+
+            for (let j = 0; j < row.length; j += 1) {
+              const pixel = data[i][j];
+              expect(pixel.r).to.equal(skybluePixelData.r);
+              expect(pixel.g).to.equal(skybluePixelData.g);
+              expect(pixel.b).to.equal(skybluePixelData.b);
+              expect(pixel.hex).to.equal(skybluePixelData.hex);
+              expect(pixel.isTransparent).to.equal(skybluePixelData.isTransparent);
+            }
           }
 
           done();

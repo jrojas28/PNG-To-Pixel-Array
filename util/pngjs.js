@@ -22,6 +22,7 @@ const ACCEPTED_DATA_TYPES = [
 const imageToObject = (pngImage) => {
   const pngData = [];
   for (let y = 0; y < pngImage.height; y += 1) {
+    const row = [];
     for (let x = 0; x < pngImage.width; x += 1) {
       const pixelIndex = ((pngImage.width * y) + x) << 2;
       const r = pngImage.data[pixelIndex];
@@ -32,7 +33,7 @@ const imageToObject = (pngImage) => {
       const parseTransparentPixels = config.get('parseTransparentPixels');
 
       const hex = rgbHex(r, g, b);
-      pngData.push({
+      row.push({
         r,
         g,
         b,
@@ -41,6 +42,8 @@ const imageToObject = (pngImage) => {
         isTransparent: a === 0,
       });
     }
+
+    pngData.push(row);
   }
 
   return pngData;
